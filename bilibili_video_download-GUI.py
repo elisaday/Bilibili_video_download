@@ -189,7 +189,11 @@ def do_prepare(inputStart,inputQuality):
         start_url = 'https://api.bilibili.com/x/web-interface/view?aid=' + start
     else:
         # https://www.bilibili.com/video/av46958874/?spm_id_from=333.334.b_63686965665f7265636f6d6d656e64.16
-        start_url = 'https://api.bilibili.com/x/web-interface/view?aid=' + re.search(r'/av(\d+)/*', start).group(1)
+        result = re.search(r'/av(\d+)/*', start)
+        if result:
+            start_url = 'https://api.bilibili.com/x/web-interface/view?aid=' + result.group(1)
+        else:
+            start_url = 'https://api.bilibili.com/x/web-interface/view?bvid=' + re.search("([Bb][Vv])(([0-9a-zA-Z])*)", start).group()
 
     # 视频质量
     # <accept_format><![CDATA[flv,flv720,flv480,flv360]]></accept_format>
